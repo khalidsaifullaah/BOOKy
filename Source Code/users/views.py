@@ -45,17 +45,3 @@ def profile(request):
                 'p_form': p_form
               }
     return render(request,'users/profile.html',context)
-
-
-def comingSoon(request):
-    context = {
-
-              }
-    return render(request,'users/coming_soon.html',context)
-
-
-def home(request):
-    context = {
-
-              }
-    return render(request,'users/base.html',context)
