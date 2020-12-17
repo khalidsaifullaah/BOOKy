@@ -3,8 +3,12 @@
 <html lang="en">
 
 <head>
+  <!-- font awesome -->
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
   <!-- Font links -->
   <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
 
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -26,7 +30,7 @@
   {% endif %}
 </head>
 
-<body>
+<body style="font-family: 'Raleway', sans-serif;">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand navLogo" href="{% url 'home' %}">BOOKy</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -73,77 +77,11 @@
   {% endfor %}
   {% endif %}
   <!-- <br><h1 class="heading text-center bg-grey">Let's change the WORLD!</h1><br> -->
-  <div class="container">
+<div class="container">
+  {% block content %}
 
-
-    {% block content %}
-
-    <br><br><br><br><br><br><br><br>
-
-    <!--================Home Banner Area =================-->
-    <section class="banner_area">
-      <div class="banner_inner d-flex align-items-center">
-        <div class="overlay"></div>
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-6">
-              <div class="banner_content text-center">
-                <h2>Recent Books</h2>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--================End Home Banner Area =================-->
-
-        <div class = column>
-        {% for book in books %}
-
-            <div class="card">
-                <a href=""><h2 style="color: #78e08f;">{{ book.title }}</h2></a>
-              <h5>{{ book.uploader }}, {{ book.upload_date }}</h5>
-              <div class="fakeimg" style="height:200px;">
-                  <img src="{{ book.cover.url }}" alt=":"/>
-              </div>
-            </div>
-
-        {% endfor %}
-
-        <div style="margin-left:40%;">
-        {% if is_paginated %}
-
-                {% if page_obj.has_previous %}
-                    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                {% endif %}
-
-                {% for num in page_obj.paginator.page_range %}
-
-                    {% if num == page_obj.number %}
-
-                        <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-
-                    {% elif num < page_obj.number|add:'3' and num > page_obj.number|add:'-3' %}
-
-                        <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
-
-                    {% endif %}
-
-                {% endfor %}
-
-                {% if page_obj.has_next %}
-                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-                {% endif %}
-
-         {% endif %}
-        </div>
-
-        </div>
-
-    {% endblock %}
-  </div>
+  {% endblock %}
+</div>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

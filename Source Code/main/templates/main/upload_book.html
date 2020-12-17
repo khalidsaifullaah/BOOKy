@@ -6,7 +6,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="heading"><h1>Upload</h1></div>
+<div class="container p-3">
+    <div class="heading"><h1>Upload Your Book</h1></div>
 <div class="content-section">
     <form method="POST">
         {% csrf_token %}
@@ -18,5 +19,6 @@
             <button class="btn btn-outline-info" type="submit">Upload</button>
         </div>
     </form>
+</div>
 </div>
 {% endblock content %}

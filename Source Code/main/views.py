@@ -9,9 +9,9 @@ from django.contrib.auth.decorators import login_required
 
 class HomePage(generic.ListView):
     model = Book
-    template_name = 'main/base.html'
+    template_name = 'main/home.html'
     context_object_name = 'books'
-    paginate_by = 2
+    paginate_by = 9
 
 
 @login_required

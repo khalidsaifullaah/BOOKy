@@ -6,13 +6,13 @@ from PIL import Image, ImageOps
 
 class Book(models.Model):
     uploader = models.ForeignKey(User, on_delete=models.CASCADE, default="")
-    title = models.TextField(default="", max_length=50)
+    title = models.CharField(default="", max_length=20)
     cover = models.ImageField(default='default.jpg', upload_to='book_covers')
     no_of_pages = models.IntegerField()
     price = models.IntegerField()
-    authors = models.TextField(default="", max_length=30)
-    publications = models.TextField(default="", max_length=20)
-    synopsis = models.TextField(default="", max_length=200)
+    authors = models.CharField(default="", max_length=20)
+    publications = models.CharField(default="", max_length=20)
+    synopsis = models.TextField(default="")
     upload_date = models.DateTimeField(default=timezone.now)
 
 
