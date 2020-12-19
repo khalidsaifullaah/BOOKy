@@ -2,18 +2,22 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from PIL import Image, ImageOps
+from django.urls import reverse
 
 
 class Book(models.Model):
     uploader = models.ForeignKey(User, on_delete=models.CASCADE, default="")
-    title = models.CharField(default="", max_length=20)
-    cover = models.ImageField(default='default.jpg', upload_to='book_covers')
+    title = models.CharField(default="", max_length=40)
+    cover = models.ImageField(upload_to='book_covers')
     no_of_pages = models.IntegerField()
     price = models.IntegerField()
-    authors = models.CharField(default="", max_length=20)
+    authors = models.CharField(default="", max_length=25)
     publications = models.CharField(default="", max_length=20)
     synopsis = models.TextField(default="")
     upload_date = models.DateTimeField(default=timezone.now)
+
+    def get_absolute_url(self):
+        return reverse('home')
 
 
     def save(self, *args, **kwargs):
