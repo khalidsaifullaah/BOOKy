@@ -17,7 +17,7 @@ class Book(models.Model):
     upload_date = models.DateTimeField(default=timezone.now)
 
     def get_absolute_url(self):
-        return reverse('home')
+        return reverse('book-detail', kwargs={'pk': self.pk})
 
 
     def save(self, *args, **kwargs):
@@ -30,7 +30,6 @@ class Book(models.Model):
 
         imagefit = ImageOps.fit(image, (200, 200), Image.ANTIALIAS)
         imagefit.save(self.cover.path)
-
 
     class Meta:
         ordering = ['-upload_date']

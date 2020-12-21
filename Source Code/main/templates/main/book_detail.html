@@ -1,0 +1,63 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'users/main.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="card-deck mt-5">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <img class="card-img-top img-responsive" style="height:100%;width:100%;" src="{{ object.cover.url }}" alt="object cover">
+                <div class="card-body">
+                    <a href="#" style="text-decoration: none; font-size: 22px; font-weight: 600; color: black;" class="card-title">{{ object.title }}</a><br>
+                    <small class="text-muted"><i class="fas fa-user"></i> <span class="mr-2">{{ object.uploader }}</span></small>
+                    <small class="text-muted"><span>{{ object.upload_date|date:"F d, Y" }}</span></small><br><br>
+                    <p class="card-text">{{object.synopsis}}</p>
+                    <p class="card-text"><small class="text-muted">Borrow Fee: <span style="color: black; font-weight: 600; font-style: italic;">৳{{ object.price }}</span></small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row pt-5 mt-5">
+    <div class="col-12">
+        {% if book.uploader == user %}
+        <a class="primary_btn" href="{% url 'book-update' book.id %}" style="  display: inline-block;
+                background: #17a2b8;
+                padding: 0px 50px;
+                color: #fff;
+                font-family: sans-serif;
+                font-size: 12px;
+                font-weight: 500;
+                line-height: 48px;
+                border: 1px solid #17a2b8;
+                border-radius: 0px;
+                outline: none !important;
+                box-shadow: none !important;
+                text-align: center;
+                text-transform: uppercase;
+                cursor: pointer;
+                transition: all 300ms linear 0s;">Edit</a>
+        <a href="{% url 'book-delete' book.id %}" class="btn btn-outline-danger" type="submit"
+            style="  display: inline-block;
+                        background: red;
+                        padding: 0px 50px;
+                        color: #fff;
+                        font-family: sans-serif;
+                        font-size: 12px;
+                        font-weight: 500;
+                        line-height: 48px;
+                        border: 1px solid red;
+                        border-radius: 0px;
+                        outline: none !important;
+                        box-shadow: none !important;
+                        text-align: center;
+                        text-transform: uppercase;
+                        cursor: pointer;
+                        transition: all 300ms linear 0s;">Delete</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

@@ -6,68 +6,6 @@
 
 {% block content %}
 
-<!--================Home Banner Area =================-->
-<!-- <section class="banner_area">
-        <div class="banner_inner d-flex align-items-center">
-          <div class="overlay"></div>
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-6">
-                <div class="banner_content text-center">
-                  <h2>Recent Books</h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> -->
-<!--================End Home Banner Area =================-->
-
-<!-- <div class = column>
-          {% for book in books %}
-  
-              <div class="card">
-                  <a href=""><h2 style="color: #78e08f;">{{ book.title }}</h2></a>
-                <h5>{{ book.uploader }}, {{ book.upload_date }}</h5>
-                <div class="fakeimg" style="height:200px;">
-                    <img src="{{ book.cover.url }}" alt=":"/>
-                </div>
-              </div>
-  
-          {% endfor %}
-  
-          <div style="margin-left:40%;">
-          {% if is_paginated %}
-  
-                  {% if page_obj.has_previous %}
-                      <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-                      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                  {% endif %}
-  
-                  {% for num in page_obj.paginator.page_range %}
-  
-                      {% if num == page_obj.number %}
-  
-                          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-  
-                      {% elif num < page_obj.number|add:'3' and num > page_obj.number|add:'-3' %}
-  
-                          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
-  
-                      {% endif %}
-  
-                  {% endfor %}
-  
-                  {% if page_obj.has_next %}
-                      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-                      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-                  {% endif %}
-  
-           {% endif %}
-          </div>
-  
-          </div> -->
-
 <div class="card-deck mt-5">
     <div class="row">
         {% for book in books %}
@@ -75,7 +13,7 @@
             <div class="card">
                 <img class="card-img-top img-responsive" style="height:100%;width:100%;" src="{{ book.cover.url }}" alt="book cover">
                 <div class="card-body">
-                    <a href="#" style="text-decoration: none; font-size: 22px; font-weight: 600; color: black;" class="card-title">{{ book.title }}</a><br>
+                    <a href="{% url 'book-detail' book.id %}" style="text-decoration: none; font-size: 22px; font-weight: 600; color: black;" class="card-title">{{ book.title }}</a><br>
                     <small class="text-muted"><i class="fas fa-user"></i> <span>{{ book.uploader }}</span></small><br><br>
                     <p class="card-text">{{book.synopsis|truncatechars:100}}</p>
                     <p class="card-text"><small class="text-muted">Borrow Fee: <span style="color: black; font-weight: 600; font-style: italic;">৳{{ book.price }}</span></small></p>
