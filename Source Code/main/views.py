@@ -38,7 +38,7 @@ class HomePage(generic.ListView):
 class BookUploadView(LoginRequiredMixin, CreateView):
     model = Book
     template_name = 'main/upload_book.html'
-    fields = ['title', 'no_of_pages', 'price', 'authors', 'publications', 'synopsis', 'cover']
+    fields = ['title', 'no_of_pages', 'price', 'authors', 'publications', 'genre', 'synopsis', 'cover']
     
     def form_valid(self, form):
         form.instance.uploader = self.request.user
@@ -75,3 +75,20 @@ class BookDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == Book.uploader:
             return True
         return False
+
+
+class SearchResultsView(ListView):
+    model = Book
+    template_name = 'main/search_results.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        object_list = Book.objects.filter(title__icontains=query)
+        return object_list
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(SearchResultsView, self).get_context_data(**kwargs)
+        # Add in additional context
+        context['query'] = self.request.GET.get('query')
+        return context

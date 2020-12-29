@@ -5,9 +5,16 @@ from PIL import Image, ImageOps
 from django.urls import reverse
 
 
+class Genre(models.Model):
+    name = models.CharField(default="", max_length=20)
+
+    def __str__(self):
+        return self.name
+
 class Book(models.Model):
     uploader = models.ForeignKey(User, on_delete=models.CASCADE, default="")
     title = models.CharField(default="", max_length=40)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name='Genre', null=True)
     cover = models.ImageField(upload_to='book_covers')
     no_of_pages = models.IntegerField()
     price = models.IntegerField()
