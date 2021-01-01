@@ -18,8 +18,7 @@
                     <a href="{% url 'book-detail' book.id %}"
                         style="text-decoration: none; font-size: 18px; font-weight: 600; color: black;"
                         class="card-title">{{ book.title }}</a><br>
-                    <small class="text-muted" style="font-size: 12px;"><i class="fas fa-user"></i> <span>{{
-                            book.uploader }}</span></small><br><br>
+                    <small class="text-muted" style="font-size: 12px;"><i class="fas fa-user"></i> <span>{{ book.uploader }}</span></small><br><br>
                     <p class="card-text" style="font-size: 12px;">{{book.synopsis|truncatechars:100}}</p>
                     <p class="card-text"><small class="text-muted">Borrow Fee: <span
                                 style="color: black; font-weight: 600; font-style: italic;">৳{{ book.price
@@ -46,7 +45,7 @@
 
             <a class="btn btn-dark mb-4" href="?page={{ num }}">{{ num }}</a>
 
-            {% elif num < page_obj.number|add:'3' and num> page_obj.number|add:'-3' %}
+            {% elif num < page_obj.number|add:'3' and num > page_obj.number|add:'-3' %}
 
                 <a class="btn btn-outline-dark mb-4" href="?page={{ num }}">{{ num }}</a>
 

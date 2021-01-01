@@ -1,55 +1,46 @@
 {% load static %}
 <!DOCTYPE html>
 <html style="height: 100%;">
+    <head>
+        <!-- font awesome -->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+      
+        <!-- Font links -->
+        <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
+      
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      
+        <!-- <link rel="stylesheet" href="{% static 'users/main.css' %}"> -->
 
-<body style="height: 100%;color: #60bc0f;">
 
-   
- 
-    <!--================ Start footer Area  =================-->	
-    <footer>
-        <div class="footer-area" style="height: 100vh;">
-            <div class="container">
-                <div class="row pt-4">
-                    <div class="col-lg-8 col-md-8 col-sm-6 pt-5">
-                        <div class="single-footer-widget tp_widgets pt-4">
-                            <div class="content-section py-5">
-                                <form method="POST">
-                                    {% csrf_token %}
-                                    <fieldset class="form-group">
-                                        <legend class="border-bottom mb-4">Delete Book</legend>
-                                        <h2 style="color: white;">Are you sure you want to delete the book "{{object.title}}"</h2>
-                                    </fieldset>
-                                    <div class="form-group">
-                                        <button class="btn btn-outline-danger" type="submit" style="  display: inline-block;
-                                        background: red;
-                                        padding: 0px 50px;
-                                        color: #fff;
-                                        font-family: sans-serif;
-                                        font-size: 12px;
-                                        font-weight: 500;
-                                        line-height: 48px;
-                                        border: 1px solid red;
-                                        border-radius: 0px;
-                                        outline: none !important;
-                                        box-shadow: none !important;
-                                        text-align: center;
-                                        text-transform: uppercase;
-                                        cursor: pointer;
-                                        transition: all 300ms linear 0s;">Yes, Delete</button>
-                                        <a class="primary_btn" href="{% url 'book-detail' object.id %}">Cancel</a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+        <title>Delete Book</title>
+      </head>
+<body style="font-family: 'Raleway', sans-serif;">
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Confirm Delete</h5>
+                    <p class="card-text">Are you sure you want to delete the book "{{object.title}}"</p>
+                    <form method="POST">
+                        {%csrf_token%}
+                        <a class="btn btn-secondary" href="{% url 'book-detail' object.id %}"><i class="fas fa-window-close"></i> Cancel</a>
+                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash-alt"></i> Yes, Delete</button>
+                    </form>
                 </div>
             </div>
         </div>
-
-        
-    </footer>
-    <!--================ End footer Area  =================-->
+    </div>
+</div>
 </body>
 
 </html>
