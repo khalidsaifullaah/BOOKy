@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import (UserRegisterForm,
                     UserUpdateForm,
                     ProfileUpdateForm)
+from main.models import Book
 
 
 
@@ -27,6 +28,16 @@ def register(request):
 
 @login_required
 def profile(request):
+
+    books = Book.objects.filter(uploader=request.user)
+    
+    context = {
+                'books': books
+              }
+    return render(request,'users/profile.html',context)
+
+@login_required
+def edit_profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST,instance=request.user)
         p_form = ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
@@ -42,6 +53,6 @@ def profile(request):
     
     context = {
                 'u_form': u_form,
-                'p_form': p_form
+                'p_form': p_form,
               }
-    return render(request,'users/profile.html',context)
+    return render(request,'users/edit_profile.html',context)

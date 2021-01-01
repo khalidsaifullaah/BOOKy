@@ -10,13 +10,20 @@
     <div class="row">
         {% for book in books %}
         <div class="col-4 mb-5">
-            <div class="card">
-                <img class="card-img-top img-responsive" style="height:100%;width:100%;" src="{{ book.cover.url }}" alt="book cover">
+            <div class="card"
+                style="background-color: white; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
+                <img class="card-img-top img-responsive" style="height:100%;width:100%;" src="{{ book.cover.url }}"
+                    alt="book cover">
                 <div class="card-body">
-                    <a href="{% url 'book-detail' book.id %}" style="text-decoration: none; font-size: 22px; font-weight: 600; color: black;" class="card-title">{{ book.title }}</a><br>
-                    <small class="text-muted"><i class="fas fa-user"></i> <span>{{ book.uploader }}</span></small><br><br>
-                    <p class="card-text">{{book.synopsis|truncatechars:100}}</p>
-                    <p class="card-text"><small class="text-muted">Borrow Fee: <span style="color: black; font-weight: 600; font-style: italic;">৳{{ book.price }}</span></small></p>
+                    <a href="{% url 'book-detail' book.id %}"
+                        style="text-decoration: none; font-size: 18px; font-weight: 600; color: black;"
+                        class="card-title">{{ book.title }}</a><br>
+                    <small class="text-muted" style="font-size: 12px;"><i class="fas fa-user"></i> <span>{{
+                            book.uploader }}</span></small><br><br>
+                    <p class="card-text" style="font-size: 12px;">{{book.synopsis|truncatechars:100}}</p>
+                    <p class="card-text"><small class="text-muted">Borrow Fee: <span
+                                style="color: black; font-weight: 600; font-style: italic;">৳{{ book.price
+                                }}</span></small></p>
                 </div>
             </div>
         </div>
@@ -27,32 +34,33 @@
 <div class="container">
     <div class="row justify-content-center text-center">
         <div class="col-12">{% if is_paginated %}
-  
+
             {% if page_obj.has_previous %}
-                <a class="btn btn-outline-dark mb-4" href="?page=1">First</a>
-                <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            <a class="btn btn-outline-dark mb-4" href="?page=1">First</a>
+            <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
             {% endif %}
 
             {% for num in page_obj.paginator.page_range %}
 
-                {% if num == page_obj.number %}
+            {% if num == page_obj.number %}
 
-                    <a class="btn btn-dark mb-4" href="?page={{ num }}">{{ num }}</a>
+            <a class="btn btn-dark mb-4" href="?page={{ num }}">{{ num }}</a>
 
-                {% elif num < page_obj.number|add:'3' and num > page_obj.number|add:'-3' %}
+            {% elif num < page_obj.number|add:'3' and num> page_obj.number|add:'-3' %}
 
-                    <a class="btn btn-outline-dark mb-4" href="?page={{ num }}">{{ num }}</a>
+                <a class="btn btn-outline-dark mb-4" href="?page={{ num }}">{{ num }}</a>
 
                 {% endif %}
 
-            {% endfor %}
+                {% endfor %}
 
-            {% if page_obj.has_next %}
+                {% if page_obj.has_next %}
                 <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
                 <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-            {% endif %}
+                {% endif %}
 
-     {% endif %}</div>
+                {% endif %}
+        </div>
     </div>
 </div>
 {% endblock content %}

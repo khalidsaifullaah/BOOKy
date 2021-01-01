@@ -4,59 +4,77 @@
 {% block css_link %}
 <link rel="stylesheet" href="{% static 'users/main.css' %}">
 {% endblock %}
-    
+
 {% block content %}
-    <!-- <div class="content-section">
-        <div class="media">
-            <div class="col-md-2 px-0">
-                <img src="{{ user.profile.image.url }}" class="img-fluid rounded-circle">
+<div class="container profile">
+    <div class="card"
+        style="background-color: white; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
+        <div class="row no-gutters">
+            <div class="col-md-2 px-4 py-4 text-center">
+                <img src="{{ user.profile.image.url }}" class="img-fluid rounded-circle mx-auto d-block" alt="">
+                <a href="{% url 'edit-profile' %}" class="btn btn-light btn-sm mt-2"><i class="fas fa-pencil-alt"></i>
+                    Edit Profile</a>
             </div>
-            <div class="media-body align-middle">
-                <h2 class="mt-0">{{user.username}}</h2>
-                <p class="text-secondary">{{user.email}}</p>
-            </div>    
+            <div class="col">
+                <div class="card-body px-4 text-center">
+                    <h2 class="card-title mb-0">{{user.username}}</h2>
+                    <p class="card-text pt-0">{{user.email}}</p>
+                </div>
+            </div>
         </div>
-    </div> -->
-    <div class="container profile">
-        <div class="card">
-            <div class="row no-gutters">
-                <div class="col-md-2 px-4 py-4">
-                    <img src="{{ user.profile.image.url }}" class="img-fluid rounded-circle mx-auto d-block" alt="">
-                </div>
-                <div class="col">
-                    <div class="card-body px-4 text-center">
-                        <h2 class="card-title mb-0">{{user.username}}</h2>
-                        <p class="card-text pt-0">{{user.email}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer w-100 text-muted">
-                <div class="row"><div class="col">Seller Rating: 
+        <div class="card-footer w-100" style="background-color: white; font-size: 14px;">
+            <div class="row">
+                <div class="col">Seller Rating:
                     {% if user.profile.seller_rating %}
-                    <span style="font-style: italic; color: #86D3FF;">{{user.profile.seller_rating}}</span>
+                    <span style="font-style: italic; color: grey">{{user.profile.seller_rating}}</span>
                     {% else %}
-                        <span style="font-style: italic; color: #86D3FF;">Unrated</span>
+                    <span style="font-style: italic; color: grey">Unrated</span>
                     {% endif %}
                 </div>
-                <div class="col text-right">Buyer Rating: 
+                <div class="col text-right">Buyer Rating:
                     {% if user.profile.buyer_rating %}
-                    <span style="font-style: italic; color: #86D3FF;">{{user.profile.buyer_rating}}</span>
+                    <span style="font-style: italic; color: grey">{{user.profile.buyer_rating}}</span>
                     {% else %}
-                        <span style="font-style: italic; color: #86D3FF;">Unrated</span>
+                    <span style="font-style: italic; color: grey">Unrated</span>
                     {% endif %}
-                </div></div>
+                </div>
             </div>
         </div>
-        <form class="py-5" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Account Info</legend>
-                {{ u_form|crispy }}
-                {{ p_form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Update Profile</button>
-            </div>
-        </form>
     </div>
+    <div class="row mt-5">
+        <div class="col">
+            <h1>Your Books</h1>
+        </div>
+    </div>
+    {% if books %}
+    <div class="row mt-5">
+        {% for book in books %}
+        <div class="col-4 mb-5">
+            <div class="card"
+                style="background-color: white; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
+                <img class="card-img-top img-responsive" style="height:100%;width:100%;" src="{{ book.cover.url }}"
+                    alt="book cover">
+                <div class="card-body">
+                    <a href="{% url 'book-detail' book.id %}"
+                        style="text-decoration: none; font-size: 18px; font-weight: 600; color: black;"
+                        class="card-title">{{ book.title }}</a><br>
+                    <small class="text-muted" style="font-size: 12px;"><i class="fas fa-user"></i> <span>{{
+                            book.uploader }}</span></small><br><br>
+                    <p class="card-text" style="font-size: 12px;">{{book.synopsis|truncatechars:100}}</p>
+                    <p class="card-text"><small class="text-muted">Borrow Fee: <span
+                                style="color: black; font-weight: 600; font-style: italic;">৳{{ book.price
+                                }}</span></small></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="row mt-5">
+        <div class="col">
+            <p class="text-muted text-center">You haven't uploaded any books yet</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
 {% endblock content %}
