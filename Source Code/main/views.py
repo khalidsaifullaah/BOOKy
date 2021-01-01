@@ -8,12 +8,15 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect,get_object_or_404,HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
+from django_filters.views import FilterView
+from .filters import BookFilter
 
 
-class HomePage(generic.ListView):
+class HomePage(FilterView):
     model = Book
+    context_object_name = 'book_list'
     template_name = 'main/home.html'
-    context_object_name = 'books'
+    filterset_class = BookFilter # ADD YOUR filterset class
     paginate_by = 6
 
 
@@ -77,18 +80,18 @@ class BookDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-class SearchResultsView(ListView):
-    model = Book
-    template_name = 'main/search_results.html'
-
-    def get_queryset(self):
-        query = self.request.GET.get('query')
-        object_list = Book.objects.filter(title__icontains=query)
-        return object_list
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super(SearchResultsView, self).get_context_data(**kwargs)
-        # Add in additional context
-        context['query'] = self.request.GET.get('query')
-        return context
+#class SearchResultsView(ListView):
+#    model = Book
+#    template_name = 'main/search_results.html'
+#
+#    def get_queryset(self):
+#        query = self.request.GET.get('query')
+#        object_list = Book.objects.filter(title__icontains=query)
+#        return object_list
+#
+#    def get_context_data(self, **kwargs):
+#        # Call the base implementation first to get a context
+#        context = super(SearchResultsView, self).get_context_data(**kwargs)
+#        # Add in additional context
+#        context['query'] = self.request.GET.get('query')
+#        return context
