@@ -1,30 +1,57 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block css_link %}
+{% load crispy_forms_tags %}
 <link rel="stylesheet" href="{% static 'users/main.css' %}">
+<style>
+
+#id_genre{
+    margin-left: 5px;
+    background-color: transparent;
+} 
+#id_title{
+    background-color: transparent;
+} 
+#id_authors{
+    background-color: transparent;
+} 
+</style>
 {% endblock %}
 
+{% block nonContainer %}
+<div class="container-fit" style="background-color: #E9ECEF;">
+    <div class="row m-0">
+        <div class="col">
+            <div class="jumbotron" style="margin-right: 18%; margin-left: 18%;">
+                <h1 class="display-4">Join<span style="color: #8D121C;"> BOOKy </span>today</h1>
+                <p class="lead">To begin lending and borrowing books with our community of book readers.</p>
+                <hr class="my-4 w-100">
+                <p class="mt-5">Not sure what to read next? Explore through our search option whatever you're looking for.</p>
+                <div class="row a">
+                    <div class="col ">
+                        <div class="card card-body text-center" style="background-color: transparent; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
+                
+                            <form method="get" class="form-inline justify-content-around">
+                                {{ filter.form|crispy }}
+                
+                            <button class="btn btn-dark" type="submit">Search</button>
+                          </form>
+                
+                        </div>
+                    </div>
+                    
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+{% endblock nonContainer%}
 {% block content %}
 
-<br>
-<div class="row">
-	<div class="col">
-		<div class="card card-body">
-
-			<form method="get">
-				{{filter.form}}
-
-		    <button class="btn btn-primary" type="submit">Search</button>
-		  </form>
-
-		</div>
-	</div>
-	
-</div>
-<br>
 
 <div class="card-deck mt-5">
     <div class="row">
+        {% if object_list.count > 1 %}
         {% for book in object_list %}
         <div class="col-4 mb-5">
             <div class="card"
@@ -37,12 +64,34 @@
                         class="card-title">{{ book.title }}</a><br>
                     <small class="text-muted" style="font-size: 12px;"><i class="fas fa-user"></i> <span>{{ book.uploader }}</span></small><br><br>
                     <p class="card-text" style="font-size: 12px;">{{book.synopsis|truncatechars:100}}</p>
-                    <p class="card-text"><small class="text-muted">Borrow Fee: <span
-                                style="color: black; font-weight: 600; font-style: italic;">৳{{ book.price}}</span></small></p>
+                    <p class="card-text"><small class="text-muted">Borrow Fee: <span style="color: black; font-weight: 600; font-style: italic;">৳{{ book.price}}</span></small></p>
                 </div>
             </div>
         </div>
         {% endfor %}
+        {% else %}
+            {% if object_list.count == 0 %}
+            <h3>Sorry, your search returned no results. Please try again with different keywords.</h3>
+            {% else %}
+            {% for book in object_list %}
+            <div class="col-7 mb-5">
+                <div class="card"
+                    style="background-color: white; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
+                    <img class="card-img-top img-responsive" style="height:100%;width:100%;" src="{{ book.cover.url }}"
+                        alt="book cover">
+                    <div class="card-body">
+                        <a href="{% url 'book-detail' book.id %}"
+                            style="text-decoration: none; font-size: 18px; font-weight: 600; color: black;"
+                            class="card-title">{{ book.title }}</a><br>
+                        <small class="text-muted" style="font-size: 12px;"><i class="fas fa-user"></i> <span>{{ book.uploader }}</span></small><br><br>
+                        <p class="card-text" style="font-size: 12px;">{{book.synopsis|truncatechars:100}}</p>
+                        <p class="card-text"><small class="text-muted">Borrow Fee: <span style="color: black; font-weight: 600; font-style: italic;">৳{{ book.price}}</span></small></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        {% endif %}
     </div>
 </div>
 

@@ -32,7 +32,7 @@
 </head>
 
 <body style="font-family: 'Raleway', sans-serif;">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand navLogo" href="{% url 'home' %}">BOOKy</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,6 +78,8 @@
   {% endfor %}
   {% endif %}
   <!-- <br><h1 class="heading text-center bg-grey">Let's change the WORLD!</h1><br> -->
+  {% block nonContainer %}
+  {% endblock %}
   <div class="container">
     {% block content %}
 
