@@ -26,7 +26,7 @@
                 <h1 class="display-4">Join<span style="color: #8D121C;"> BOOKy </span>today</h1>
                 <p class="lead">To begin lending and borrowing books with our community of book readers.</p>
                 <hr class="my-4 w-100">
-                <p class="mt-5">Not sure what to read next? Explore through our search option whatever you're looking for.</p>
+                <p class="mt-5">Not sure what to read next? Explore through our search option whatevertttt you're looking for.</p>
                 <div class="row a">
                     <div class="col ">
                         <div class="card card-body text-center" style="background-color: transparent; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
@@ -62,7 +62,7 @@
                     <a href="{% url 'book-detail' book.id %}"
                         style="text-decoration: none; font-size: 18px; font-weight: 600; color: black;"
                         class="card-title">{{ book.title }}</a><br>
-                    <small class="text-muted" style="font-size: 12px;"><i class="fas fa-user"></i> <span>{{ book.uploader }}</span></small><br><br>
+                        <a href="{% url 'user_detail_view' pk=book.uploader.profile.pk %}"><small class="text-muted" style="font-size: 12px;"><i class="fas fa-user"></i> <span>{{ book.uploader }}</span></small></a><br><br>
                     <p class="card-text" style="font-size: 12px;">{{book.synopsis|truncatechars:100}}</p>
                     <p class="card-text"><small class="text-muted">Borrow Fee: <span style="color: black; font-weight: 600; font-style: italic;">৳{{ book.price}}</span></small></p>
                 </div>
@@ -83,7 +83,7 @@
                         <a href="{% url 'book-detail' book.id %}"
                             style="text-decoration: none; font-size: 18px; font-weight: 600; color: black;"
                             class="card-title">{{ book.title }}</a><br>
-                        <small class="text-muted" style="font-size: 12px;"><i class="fas fa-user"></i> <span>{{ book.uploader }}</span></small><br><br>
+                            <a href="{% url 'user_detail_view' pk=book.uploader.profile.pk %}"><small class="text-muted" style="font-size: 12px;"><i class="fas fa-user"></i> <span>{{ book.uploader }}</span></small></a><br><br>
                         <p class="card-text" style="font-size: 12px;">{{book.synopsis|truncatechars:100}}</p>
                         <p class="card-text"><small class="text-muted">Borrow Fee: <span style="color: black; font-weight: 600; font-style: italic;">৳{{ book.price}}</span></small></p>
                     </div>

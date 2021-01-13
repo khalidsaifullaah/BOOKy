@@ -30,7 +30,7 @@ class BookUploadView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class BookDetailView(DetailView):
+class BookDetailView(LoginRequiredMixin, DetailView):
     model = Book
     template_name = 'main/book_detail.html'
 

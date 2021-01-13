@@ -4,7 +4,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import (UserRegisterForm,
                     UserUpdateForm,
                     ProfileUpdateForm)
+from django.contrib.auth.mixins import LoginRequiredMixin
 from main.models import Book
+from django.views import generic
+from users.models import Profile
+from django.contrib.auth.models import User
+
 
 
 
@@ -56,3 +61,11 @@ def edit_profile(request):
                 'p_form': p_form,
               }
     return render(request,'users/edit_profile.html',context)
+    
+
+class UserDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Profile
+    template_name = 'users/user_detail_view.html'
+
+    def books(self):
+        return Book.objects.filter(uploader=self.object.user)
