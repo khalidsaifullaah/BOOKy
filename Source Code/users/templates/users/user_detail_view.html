@@ -3,6 +3,49 @@
 {% load static %}
 {% block css_link %}
 <link rel="stylesheet" href="{% static 'users/main.css' %}">
+<style>
+#full-stars-example-two {
+  /* use display:inline-flex to prevent whitespace issues. alternatively, you can put all the children of .rating-group on a single line */
+}
+#full-stars-example-two .rating-group {
+  display: inline-flex;
+  /* make hover effect work properly in IE */
+}
+#full-stars-example-two .rating__icon {
+  pointer-events: none;
+  /* hide radio inputs */
+}
+#full-stars-example-two .rating__input {
+  position: absolute !important;
+  left: -9999px !important;
+  /* hide 'none' input from screenreaders */
+}
+#full-stars-example-two .rating__input--none {
+  display: none;
+  /* set icon padding and size */
+}
+#full-stars-example-two .rating__label {
+  cursor: pointer;
+  padding: 0 0.1em;
+  font-size: 2rem;
+  /* set default star color */
+}
+#full-stars-example-two .rating__icon--star {
+  color: orange;
+  /* if any input is checked, make its following siblings grey */
+}
+#full-stars-example-two .rating__input:checked ~ .rating__label .rating__icon--star {
+  color: #ddd;
+  /* make all stars orange on rating group hover */
+}
+#full-stars-example-two .rating-group:hover .rating__label .rating__icon--star {
+  color: orange;
+  /* make hovered input's following siblings grey on hover */
+}
+#full-stars-example-two .rating__input:hover ~ .rating__label .rating__icon--star {
+  color: #ddd;
+}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -11,27 +54,27 @@
         style="background-color: white; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
         <div class="row no-gutters">
             <div class="col-md-2 px-4 py-4 text-center">
-                <img src="{{ object.user.profile.image.url }}" class="img-fluid rounded-circle mx-auto d-block" alt="">
+                <img src="{{ user.profile.image.url }}" class="img-fluid rounded-circle mx-auto d-block" alt="">
             </div>
             <div class="col">
                 <div class="card-body px-4 text-center">
-                    <h2 class="card-title mb-0">{{object.user.username}}</h2>
-                    <p class="card-text pt-0">{{object.user.email}}</p>
+                    <h2 class="card-title mb-0">{{user.username}}</h2>
+                    <p class="card-text pt-0">{{user.email}}</p>
                 </div>
             </div>
         </div>
         <div class="card-footer w-100" style="background-color: white; font-size: 14px;">
             <div class="row">
                 <div class="col">Seller Rating:
-                    {% if object.user.profile.seller_rating %}
-                    <span style="font-style: italic; color: grey">{{object.user.profile.seller_rating}}</span>
+                    {% if seller_rating > 0 %}
+                    <span style="font-style: italic; color: grey">{{seller_rating}}</span>
                     {% else %}
                     <span style="font-style: italic; color: grey">Unrated</span>
                     {% endif %}
                 </div>
                 <div class="col text-right">Buyer Rating:
-                    {% if object.user.profile.buyer_rating %}
-                    <span style="font-style: italic; color: grey">{{object.user.profile.buyer_rating}}</span>
+                    {% if buyer_rating %}
+                    <span style="font-style: italic; color: grey">{{buyer_rating}}</span>
                     {% else %}
                     <span style="font-style: italic; color: grey">Unrated</span>
                     {% endif %}
@@ -41,12 +84,12 @@
     </div>
     <div class="row mt-5">
         <div class="col">
-            <h1>{{ object.user.username }}'s Books</h1>
+            <h1>{{ user.username }}'s Books</h1>
         </div>
     </div>
-    {% if view.books %}
+    {% if books %}
     <div class="row mt-5">
-        {% for book in view.books %}
+        {% for book in books %}
         <div class="col-4 mb-5">
             <div class="card"
                 style="background-color: white; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
@@ -68,9 +111,51 @@
     {% else %}
     <div class="row mt-5">
         <div class="col">
-            <p class="text-muted text-center">You haven't uploaded any books yet</p>
+            <p class="text-muted text-center">{{user.username}} hasn't uploaded any books yet</p>
         </div>
     </div>
     {% endif %}
-</div>
+
+    {% if user != request.user %}
+    <div class="row mt-5">
+        <div class="col"><h1>Rate This User:</h1></div>
+    </div>
+    <div class="row mt-3 pb-5">
+        <div class="col">
+            <form method="POST" action="">
+                {% csrf_token %}
+            <select class="form-control form-control-sm w-25" name="rating_class">
+                <option value="seller">Seller Rating</option>
+                <option value="buyer">Buyer Rating</option>
+            </select>
+                <div id="full-stars-example-two" class="mt-3">
+                    <div class="rating-group">
+                        <input disabled checked class="rating__input rating__input--none" name="rating" id="rating3-none" value="0" type="radio">
+                        <label aria-label="1 star" class="rating__label" for="rating3-1"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                        <input class="rating__input" name="rating" id="rating3-1" value="1" type="radio">
+                        <label aria-label="2 stars" class="rating__label" for="rating3-2"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                        <input class="rating__input" name="rating" id="rating3-2" value="2" type="radio">
+                        <label aria-label="3 stars" class="rating__label" for="rating3-3"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                        <input class="rating__input" name="rating" id="rating3-3" value="3" type="radio">
+                        <label aria-label="4 stars" class="rating__label" for="rating3-4"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                        <input class="rating__input" name="rating" id="rating3-4" value="4" type="radio">
+                        <label aria-label="5 stars" class="rating__label" for="rating3-5"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                        <input class="rating__input" name="rating" id="rating3-5" value="5" type="radio">
+                    </div>
+                </div>
+                <button class="btn btn-primary">Rate</button>
+                </form>
+                
+            </div> 
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+<script>
+   function muFunc(event){
+        event.preventDefault()
+        console.log(event)
+    }
+</script>
 {% endblock content %}

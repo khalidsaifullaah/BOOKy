@@ -20,7 +20,9 @@ body,html{
     /* animation-timing-function: ease-in; */
 
 }
-
+.ggg{
+    background-color: red;
+}
 
 
 /* @keyframes slideBG{

@@ -12,6 +12,8 @@ class Profile(models.Model):
     contact_no  = models.CharField(max_length=11, null=True, blank=True)
     buyer_rating = models.IntegerField(default=0, null=True, blank=True)
     seller_rating = models.IntegerField(default=0, null=True, blank=True)
+    total_seller_ratings = models.IntegerField(default=0, null=True, blank=True)
+    total_buyer_ratings = models.IntegerField(default=0, null=True, blank=True)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def save(self, *args, **kwargs):
