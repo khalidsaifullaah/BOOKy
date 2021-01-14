@@ -83,7 +83,7 @@
                         <a href="{% url 'book-detail' book.id %}"
                             style="text-decoration: none; font-size: 18px; font-weight: 600; color: black;"
                             class="card-title">{{ book.title }}</a><br>
-                            <a href="{% url 'user_detail_view' username=book.uploader.usename %}"><small class="text-muted" style="font-size: 12px;"><i class="fas fa-user"></i> <span>{{ book.uploader }}</span></small></a><br><br>
+                            <a href="{% url 'user_detail_view' username=book.uploader.username %}"><small class="text-muted" style="font-size: 12px;"><i class="fas fa-user"></i> <span>{{ book.uploader }}</span></small></a><br><br>
                         <p class="card-text" style="font-size: 12px;">{{book.synopsis|truncatechars:100}}</p>
                         <p class="card-text"><small class="text-muted">Borrow Fee: <span style="color: black; font-weight: 600; font-style: italic;">৳{{ book.price}}</span></small></p>
                     </div>
