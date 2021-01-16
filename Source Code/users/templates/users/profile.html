@@ -4,7 +4,8 @@
 {% block css_link %}
 <link rel="stylesheet" href="{% static 'users/main.css' %}">
 <style>
-    .checked{
+
+.checked{
         color: #FFAE02;
     }
 </style>
@@ -12,12 +13,11 @@
 
 {% block content %}
 <div class="container profile">
-    <div class="card"
-        style="background-color: white; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
+    <div class="card mt-5" style="color: white; background:linear-gradient(135deg, #3d7b8a 0%,#1c4652 100%); border-radius: .75rem; border-color: linear-gradient(135deg, #3d7b8a 0%,#1c4652 100%) box-shadow: 0 6px 15px rgba(36, 37, 38, 0.5);">
         <div class="row no-gutters">
             <div class="col-md-2 px-4 py-4 text-center">
                 <img src="{{ user.profile.image.url }}" class="img-fluid rounded-circle mx-auto d-block" alt="">
-                <a href="{% url 'edit-profile' %}" class="btn btn-light btn-sm mt-2"><i class="fas fa-pencil-alt"></i>
+                <a href="{% url 'edit-profile' %}" class="btn btn-outline-light btn-sm mt-2"><i class="fas fa-pencil-alt"></i>
                     Edit Profile</a>
             </div>
             <div class="col">
@@ -27,40 +27,102 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer w-100" style="background-color: white; font-size: 14px;">
+        <div class="card-footer w-100" style="font-size: 14px; border-top: 0;">
             <div class="row">
-                <div class="col">Seller Rating:
-                    {% if user.profile.seller_rating %}
-                    <span style="font-style: italic;">{{user.profile.seller_rating}}</span>
+                <div class="col" id="seller_rating">Seller Rating:
+                    {% if seller_rating > 0 %}
+                    <!-- <span style="font-style: italic;"> -->
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span><span style="font-family: Arial, Helvetica, sans-serif">{{user.profile.total_seller_ratings}}</span> Ratings</span>
+                    <!-- </span> -->
+                    
                     {% else %}
                     <span style="font-style: italic;">
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
                         <span><span style="font-family: Arial, Helvetica, sans-serif">0</span> Ratings</span>
                     </span>
                     {% endif %}
                 </div>
-                <div class="col text-right">Buyer Rating:
-                    {% if user.profile.buyer_rating %}
-                    <span style="font-style: italic;">{{user.profile.buyer_rating}}</span>
+
+                <div class="col text-right buyer_rating" id="buyer_rating">Buyer Rating:
+                    {% if buyer_rating > 0 %}
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                    <span><span style="font-family: Arial, Helvetica, sans-serif">{{user.profile.total_buyer_ratings}}</span> Ratings</span>
                     {% else %}
-                    <span style="font-style: italic;">
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                    <!-- <span style="font-style: italic;"> -->
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
                         <span><span style="font-family: Arial, Helvetica, sans-serif">0</span> Ratings</span>
-                    </span>
+                    <!-- </span> -->
                     {% endif %}
+
+                    <!-- Script for coloring the stars dynamically based on the user's rating -->
+                    <script>
+                        let seller_rating = {{ seller_rating }}
+                        let buyer_rating = {{ buyer_rating }}
+
+                        let seller_ancestor = document.getElementById('seller_rating')
+                        let seller_descendents = seller_ancestor.getElementsByTagName('*');
+
+                        let buyer_ancestor = document.getElementById('buyer_rating')
+                        let buyer_descendents = buyer_ancestor.getElementsByTagName('*');
+
+                        // coloring seller rating star
+                        for(let i = 0; i < seller_rating; i++){
+                            element = seller_descendents[i]
+                            // console.log(element)
+                            element.setAttribute('class','fa fa-star checked')
+                        }
+
+                        // coloring buyer rating star
+                        for(let i = 0; i < buyer_rating; i++){
+                            element = buyer_descendents[i]
+                            // console.log(element)
+                            element.setAttribute('class','fa fa-star checked')
+                        }
+                    </script>
+
                 </div>
             </div>
         </div>
     </div>
-    <div class="row mt-5">
+
+    <div class="row mt-1 ">
+<div class="col">
+    <div class="card pt-2 pb-4 pr-4 pl-4" style="color: white; background:linear-gradient(135deg, #46464b 0%,#212125 100%); border-color:linear-gradient(135deg, #46464b 0%,#212125 100%);   border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.5); margin-top: 50px;">
+        <div class="row">
+    
+        <div class="col w-100" >
+            <div class="card-body h-100">
+                <h3 class="card-title mb-0 pt-4 pb-3">User Details</h3>
+               <p class="card-text mt-1 mb-0 p-2"><i class="fas fa-user" style="margin-right: 10px;"></i>{{ user.first_name }} {{ user.last_name }}</p>
+               <p class="card-text mt-1 mb-0 p-2"><i class="fas fa-envelope" style="margin-right: 10px;"></i> {{ user.email }}</p>
+                <p class="card-text m-0 p-2"><i class="fas fa-home" style="margin-right: 10px;"></i> {{ user.profile.address }}</p>
+                <p class="card-text m-0 p-2"><i class="fas fa-phone" style="margin-right: 10px;"></i> {{ user.profile.contact_no }}</p>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+</div>
+
+    <div class="row" style="margin-top: 150px;">
         <div class="col">
             <h1>Your Books</h1>
         </div>
@@ -93,5 +155,5 @@
         </div>
     </div>
     {% endif %}
-</div>
+
 {% endblock content %}

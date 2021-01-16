@@ -45,13 +45,17 @@
 #full-stars-example-two .rating__input:hover ~ .rating__label .rating__icon--star {
   color: #ddd;
 }
+
+
+.checked{
+        color: #FFAE02;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container profile">
-    <div class="card"
-        style="background-color: white; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
+    <div class="card mt-5" style="color: white; background:linear-gradient(135deg, #3d7b8a 0%,#1c4652 100%); border-radius: .75rem; border-color: linear-gradient(135deg, #3d7b8a 0%,#1c4652 100%); box-shadow: 0 6px 15px rgba(36, 37, 38, 0.5);">
         <div class="row no-gutters">
             <div class="col-md-2 px-4 py-4 text-center">
                 <img src="{{ user.profile.image.url }}" class="img-fluid rounded-circle mx-auto d-block" alt="">
@@ -63,26 +67,139 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer w-100" style="background-color: white; font-size: 14px;">
+        <div class="card-footer w-100" style="font-size: 14px; border-top: 0;">
             <div class="row">
-                <div class="col">Seller Rating:
+                <div class="col" id="seller_rating">Seller Rating:
                     {% if seller_rating > 0 %}
-                    <span style="font-style: italic; color: grey">{{seller_rating}}</span>
+                    <!-- <span style="font-style: italic;"> -->
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span><span style="font-family: Arial, Helvetica, sans-serif">{{user.profile.total_seller_ratings}}</span> Ratings</span>
+                    <!-- </span> -->
+                    
                     {% else %}
-                    <span style="font-style: italic; color: grey">Unrated</span>
+                    <span style="font-style: italic;">
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span><span style="font-family: Arial, Helvetica, sans-serif">0</span> Ratings</span>
+                    </span>
                     {% endif %}
                 </div>
-                <div class="col text-right">Buyer Rating:
-                    {% if buyer_rating %}
-                    <span style="font-style: italic; color: grey">{{buyer_rating}}</span>
+
+                <div class="col text-right buyer_rating" id="buyer_rating">Buyer Rating:
+                    {% if buyer_rating > 0 %}
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                    <span><span style="font-family: Arial, Helvetica, sans-serif">{{user.profile.total_buyer_ratings}}</span> Ratings</span>
                     {% else %}
-                    <span style="font-style: italic; color: grey">Unrated</span>
+                    <!-- <span style="font-style: italic;"> -->
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span class="far fa-star"></span>
+                        <span><span style="font-family: Arial, Helvetica, sans-serif">0</span> Ratings</span>
+                    <!-- </span> -->
                     {% endif %}
+
+                    <!-- Script for coloring the stars dynamically based on the user's rating -->
+                    <script>
+                        let seller_rating = {{ seller_rating }}
+                        let buyer_rating = {{ buyer_rating }}
+
+                        let seller_ancestor = document.getElementById('seller_rating')
+                        let seller_descendents = seller_ancestor.getElementsByTagName('*');
+
+                        let buyer_ancestor = document.getElementById('buyer_rating')
+                        let buyer_descendents = buyer_ancestor.getElementsByTagName('*');
+
+                        // coloring seller rating star
+                        for(let i = 0; i < seller_rating; i++){
+                            element = seller_descendents[i]
+                            // console.log(element)
+                            element.setAttribute('class','fa fa-star checked')
+                        }
+
+                        // coloring buyer rating star
+                        for(let i = 0; i < buyer_rating; i++){
+                            element = buyer_descendents[i]
+                            // console.log(element)
+                            element.setAttribute('class','fa fa-star checked')
+                        }
+                    </script>
+
                 </div>
             </div>
         </div>
     </div>
-    <div class="row mt-5">
+
+    <div class="row mt-1 ">
+<div class="col-8">
+    <div class="card pt-2 pb-4 pr-4 pl-4" style="color: white; background:linear-gradient(135deg, #46464b 0%,#212125 100%); border-color:linear-gradient(135deg, #46464b 0%,#212125 100%);   border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.5); margin-top: 50px;">
+        <div class="row">
+        
+        <div class="col w-100" >
+            <div class="card-body h-100">
+                <h3 class="card-title mb-0 pt-4 pb-3">User Details</h3>
+               <p class="card-text mt-1 mb-0 p-2"><i class="fas fa-user" style="margin-right: 10px;"></i>{{ user.first_name }} {{ user.last_name }}</p>
+               <p class="card-text mt-1 mb-0 p-2"><i class="fas fa-envelope" style="margin-right: 10px;"></i> {{ user.email }}</p>
+                <p class="card-text m-0 p-2"><i class="fas fa-home" style="margin-right: 10px;"></i> {{ user.profile.address }}</p>
+                <p class="card-text m-0 p-2"><i class="fas fa-phone" style="margin-right: 10px;"></i> {{ user.profile.contact_no }}</p>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+{% if user != request.user %}
+<div class="col-4">
+    <div class="card pt-2 pb-4 pr-4 pl-4" style="color: white; background:linear-gradient(135deg, #c28c5c 0%,#8f532f 100%); border-color: linear-gradient(135deg, #c28c5c 0%,#8f532f 100%); border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.5); margin-top: 50px;">
+        <div class="row">
+            <div class="col">
+                <div class="card-body h-100">
+                    <h3 class="card-title mb-0 pt-4 pb-3">Rate This User:</h3>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                <select class="form-control form-control-sm w-100 mt-3" name="rating_class">
+                    <option value="seller">Seller Rating</option>
+                    <option value="buyer">Buyer Rating</option>
+                </select>
+                    <div id="full-stars-example-two" class="mt-3">
+                        <div class="rating-group">
+                            <input disabled checked class="rating__input rating__input--none" name="rating" id="rating3-none" value="0" type="radio">
+                            <label aria-label="1 star" class="rating__label" for="rating3-1"><i class="rating__icon rating__icon--star far fa-star"></i></label>
+                            <input class="rating__input" name="rating" id="rating3-1" value="1" type="radio">
+                            <label aria-label="2 stars" class="rating__label" for="rating3-2"><i class="rating__icon rating__icon--star far fa-star"></i></label>
+                            <input class="rating__input" name="rating" id="rating3-2" value="2" type="radio">
+                            <label aria-label="3 stars" class="rating__label" for="rating3-3"><i class="rating__icon rating__icon--star far fa-star"></i></label>
+                            <input class="rating__input" name="rating" id="rating3-3" value="3" type="radio">
+                            <label aria-label="4 stars" class="rating__label" for="rating3-4"><i class="rating__icon rating__icon--star far fa-star"></i></label>
+                            <input class="rating__input" name="rating" id="rating3-4" value="4" type="radio">
+                            <label aria-label="5 stars" class="rating__label" for="rating3-5"><i class="rating__icon rating__icon--star far fa-star"></i></label>
+                            <input class="rating__input" name="rating" id="rating3-5" value="5" type="radio">
+                        </div>
+                    </div>
+                    <button class="btn btn-warning btn-sm mt-3 pl-5 pr-5">Rate</button>
+                    </form>
+                </div>
+                </div> 
+                </div>
+    </div>
+</div>
+
+    {% endif %}
+
+</div>
+
+    <div class="row" style="margin-top: 150px;">
         <div class="col">
             <h1>{{ user.username }}'s Books</h1>
         </div>
@@ -116,41 +233,7 @@
     </div>
     {% endif %}
 
-    {% if user != request.user %}
-    <div class="row mt-5">
-        <div class="col"><h1>Rate This User:</h1></div>
-    </div>
-    <div class="row mt-3 pb-5">
-        <div class="col">
-            <form method="POST" action="">
-                {% csrf_token %}
-            <select class="form-control form-control-sm w-25" name="rating_class">
-                <option value="seller">Seller Rating</option>
-                <option value="buyer">Buyer Rating</option>
-            </select>
-                <div id="full-stars-example-two" class="mt-3">
-                    <div class="rating-group">
-                        <input disabled checked class="rating__input rating__input--none" name="rating" id="rating3-none" value="0" type="radio">
-                        <label aria-label="1 star" class="rating__label" for="rating3-1"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-                        <input class="rating__input" name="rating" id="rating3-1" value="1" type="radio">
-                        <label aria-label="2 stars" class="rating__label" for="rating3-2"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-                        <input class="rating__input" name="rating" id="rating3-2" value="2" type="radio">
-                        <label aria-label="3 stars" class="rating__label" for="rating3-3"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-                        <input class="rating__input" name="rating" id="rating3-3" value="3" type="radio">
-                        <label aria-label="4 stars" class="rating__label" for="rating3-4"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-                        <input class="rating__input" name="rating" id="rating3-4" value="4" type="radio">
-                        <label aria-label="5 stars" class="rating__label" for="rating3-5"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-                        <input class="rating__input" name="rating" id="rating3-5" value="5" type="radio">
-                    </div>
-                </div>
-                <button class="btn btn-primary">Rate</button>
-                </form>
-                
-            </div> 
-            </div>
-        </div>
-    </div>
-    {% endif %}
+    
 
 <script>
    function muFunc(event){

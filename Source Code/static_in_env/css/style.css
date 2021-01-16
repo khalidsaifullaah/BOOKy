@@ -1,3 +1,18 @@
-.ggg{
-    background-color: red;
+body{
+    background-color: #F0F4F7;
+}
+.container{
+    background-color: #F0F4F7;
+}
+.dropdown-toggle::after {
+    content: none;
+}
+.leftNav{
+    color: white;
+}
+.leftNav:hover{
+    color: black;
+}
+.leftNav:active{
+    background-color: white;
 }

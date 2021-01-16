@@ -33,7 +33,7 @@
 </head>
 
 <body style="font-family: 'Raleway', sans-serif;">
-  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: black;">
     <a class="navbar-brand navLogo" href="{% url 'home' %}">BOOKy</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,14 +52,26 @@
       <ul class="navbar-nav justify-content-end ">
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+          <a class="nav-link" href="{% url 'upload_book' %}" style="color: white;"><i class="fas fa-upload"></i> <span>Upload</span></a>
+        </li>
+        <ul class="navbar-nav justify-content-end pl-3">
+        <li class="nav-item dropdown show">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="padding: 0;"><img style="height: 45px; width: 45px;" src="{{ request.user.profile.image.url }}" class="img-fluid rounded-circle mx-auto d-block" alt="profile pic"></a>
+            <div class="dropdown-menu dropdown-menu-right" style="background-color: black;border: 1px solid #26262a;">
+                <a href="{% url 'profile' %}" class="dropdown-item leftNav">My profile</a>
+                <!-- <a href="#" class="dropdown-item">Settings</a> -->
+                <div class="dropdown-divider"></div>
+                <a href="{% url 'logout' %}" class="dropdown-item leftNav">Logout</a>
+            </div>
+        </li>
+        
+      </ul>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="{% url 'profile' %}" style="padding: 0;"><img style="height: 50px; width: 50px;" src="{{ user.profile.image.url }}" class="img-fluid rounded-circle mx-auto d-block" alt="profile pic"></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'upload_book' %}">Upload Book</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}">Log out</a>
-        </li>
+          <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Log out</a>
+        </li> -->
         {% else %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'register' %}">Register</a>

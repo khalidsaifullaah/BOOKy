@@ -9,6 +9,9 @@
     margin-left: 5px;
     background-color: transparent;
 } 
+#div_id_genre{
+    color: black;
+}
 #id_title{
     background-color: transparent;
 } 
@@ -19,17 +22,17 @@
 {% endblock %}
 
 {% block nonContainer %}
-<div class="container-fit" style="background-color: #E9ECEF;">
+<div class="container-fit" style="color: white; background:linear-gradient(135deg, #46464b 0%,#212125 100%); border-color: linear-gradient(135deg, #46464b 0%,#212125 100%); border-radius: .075rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.5);">
     <div class="row m-0">
         <div class="col">
-            <div class="jumbotron" style="margin-right: 18%; margin-left: 18%;">
+            <div class="jumbotron" style="margin-right: 18%; margin-left: 18%; background: transparent;">
                 <h1 class="display-4">Join<span style="color: #8D121C;"> BOOKy </span>today</h1>
                 <p class="lead">To begin lending and borrowing books with our community of book readers.</p>
                 <hr class="my-4 w-100">
                 <p class="mt-5">Not sure what to read next? Explore through our search option whatever you're looking for.</p>
                 <div class="row a">
                     <div class="col ">
-                        <div class="card card-body text-center" style="background-color: transparent; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
+                        <div class="card card-body text-center" style="background:linear-gradient(135deg, #fbfbfc 0%,#f6f7f9 100%); border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.5);">
                 
                             <form method="get" class="form-inline justify-content-around">
                                 {{ filter.form|crispy }}
