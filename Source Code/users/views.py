@@ -100,12 +100,14 @@ def UserDetailView(request, username):
                 user.profile.seller_rating += int(form['rating'])
                 user.profile.total_seller_ratings += 1
                 user.save()
+                messages.success(request, f"You've successfully rated the seller!")
                 return redirect(f'/user/{username}/')
         else:
             if int(form['rating']) > 0:
                 user.profile.buyer_rating += int(form['rating'])
                 user.profile.total_buyer_ratings += 1
                 user.save()
+                messages.success(request, f"You've successfully rated the buyer!")
                 return redirect(f'/user/{username}/')
             
     else:
