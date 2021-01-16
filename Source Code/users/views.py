@@ -87,7 +87,7 @@ def edit_profile(request):
 #         print("he",form)
 #         return
 
-# @login_required
+@login_required
 def UserDetailView(request, username):
     if request.method == 'POST':
         user = get_object_or_404(User, username=username)

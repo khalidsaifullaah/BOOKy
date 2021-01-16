@@ -56,9 +56,9 @@
     <div class="row">
         {% if object_list.count > 1 %}
         {% for book in object_list %}
-        <div class="col-4 mb-5">
+        <div class="col-lg-4 col-md-4 col-sm-12 mb-5">
             <div class="card"
-                style="background-color: white; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
+                style="background-color: white; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.3);">
                 <img class="card-img-top img-responsive" style="height:100%;width:100%;" src="{{ book.cover.url }}"
                     alt="book cover">
                 <div class="card-body">
@@ -79,7 +79,7 @@
             {% for book in object_list %}
             <div class="col-7 mb-5">
                 <div class="card"
-                    style="background-color: white; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);">
+                    style="background-color: white; border-radius: .75rem; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.3);">
                     <img class="card-img-top img-responsive" style="height:100%;width:100%;" src="{{ book.cover.url }}"
                         alt="book cover">
                     <div class="card-body">

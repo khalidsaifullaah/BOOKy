@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from django_filters.views import FilterView
 from .filters import BookFilter
+from django.contrib.auth.models import User
 
 
 class HomePage(FilterView):
@@ -33,6 +34,19 @@ class BookUploadView(LoginRequiredMixin, CreateView):
 class BookDetailView(LoginRequiredMixin, DetailView):
     model = Book
     template_name = 'main/book_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)    
+        user = get_object_or_404(User, username=self.object.uploader)
+        # Rating calculation
+        if user.profile.total_seller_ratings > 0:
+            seller_rating = round(user.profile.seller_rating/user.profile.total_seller_ratings)
+        else:
+            seller_rating = 0
+        
+        context['seller_rating'] = seller_rating
+        print(self.object.uploader)
+        return context
 
 
 class BookUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
