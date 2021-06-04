@@ -2,7 +2,8 @@
 
 - **Windows**
 1. Open terminal using WinKey+R then Type "cmd" and then click "OK" . Run the following command <br>
-`git clone https://github.com/khalidsaifullaah/BOOKy.git`
+`git clone https://github.com/khalidsaifullaah/BOOKy.git` <br>
+`cd BOOKy`
 2. Install and active virtual environment using  <br>
 `pip install virtualenv` <br>
 `virtualenv env` <br>
